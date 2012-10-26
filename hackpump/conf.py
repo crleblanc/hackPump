@@ -14,16 +14,18 @@ serial_device='/dev/ttyACM0'
 # (also called 'what') field that corresponds to a named code 
 # in the ir_code_file below.  Only the summary and start/end 
 # fields are used.
-calendar_id='sil25hl843ok93na3jqfibckos@group.calendar.google.com'
+calendar_id='ABC123@group.calendar.google.com'
 
 # The JSON file containing the named IR codes to transmit to 
 # the IR toy.  These can be recorded using the record_codes.py 
 # utility to capture all the useful IR codes from your remote.
 # This path is relative to where the program is called from.
-ir_code_file='mitsu_pump_codes.json'
+# NOTE: this file will not exist, you need to create one with 
+# record_codes.py
+ir_code_file='ir_codes.json'
 
 # The file we use to store the previous settings for the heat 
-# pump
+# pump.  It will be created if it doesn't exist.
 saved_settings='settings.json'
 
 # the named IR code that corresponds to 'off', or what code 
