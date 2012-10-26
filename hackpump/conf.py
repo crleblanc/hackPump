@@ -32,15 +32,15 @@ saved_settings='settings.json'
 # should be sent when there are no valid calendar events at the 
 # current time.  Setting this to None means no IR code will be 
 # sent.
-off_setting = 'off'
+off_setting='off'
 
 # the filename to send logging messages to.  If set to None, logging
 # will be disabled.
-logfile = 'hackpump.log'
+logfile='hackpump.log'
 
 # the level of logging information to send to the logfile.
 # See http://docs.python.org/library/logging.html for more information
 # on debugging levels.  Levels are: DEBUG, INFO, WARNING, ERROR, CRITICAL.
 # Set the level to logging.CRITICAL if you don't want much logging
 # info.
-logging_level = logging.ERROR
+logging_level=logging.ERROR
