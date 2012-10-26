@@ -2,13 +2,9 @@ hackPump
 ========
 
 Control a heat pump over the internet using a `Raspberry Pi <http://raspberrypi.org>`_ 
-and an `IR Toy<http://dangerousprototypes.com/docs/USB_Infrared_Toy>`_.  Actually this
+and an `IR Toy <http://dangerousprototypes.com/docs/USB_Infrared_Toy>`_.  Actually this
 project could be used to control any IR device from a Google calendar, not just a heat
-pump.
-
-.. note::
-  The IR utilities in this project do not use or supplement LIRC.  The codes from my
-  heat pump were too long to be used with LIRC, so I rolled my own solution.
+pump.  It can handle very long IR codes, so should be able to handle most 38 KHz signals.
 
 Project Goals
 -------------
@@ -45,7 +41,7 @@ Project components
 
 - A Python module for transmitting and receiving IR codes from an IR Toy.  The IR Toy is
   an excellent USB IR transceiver, perfect for this application.  The module I wrote is 
-  called PyIrToy.  See the github project page for more info: `<https://github.com/crleblanc/PyIrToy>`_.
+  called PyIrToy.  See the github project page for more info: `PyIrToy <https://github.com/crleblanc/PyIrToy>`_.
   This simple module makes it easy to communicate with the IR Toy, and is worth looking into
   if you're using the IR Toy and don't feel the desire to work with C.  I decided to split
   this into two separate projects, since PyIrToy is far more generic than this project.
@@ -57,4 +53,6 @@ Project components
 
 - Two command line utilities called record_codes.py and transmit_codes.py for recording and
   transmitting IR codes.  transmit_codes.py is mainly used for testing the recorded codes.
-  record_codes.py records the IR codes to a JSON file that can be used by hack_pump.py.
+  record_codes.py records the IR codes to a JSON file that can be used by hack_pump.py.  Note:
+  The IR utilities in this project do not use or supplement LIRC.  The codes from my heat pump 
+  were too long to be used with LIRC, so I rolled my own solution.
