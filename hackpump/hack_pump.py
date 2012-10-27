@@ -2,13 +2,8 @@
 #
 # Main program for polling a google calendar and controlling the heat pump
 
-# TODO:
-#Y- load settings from a .py file (or json, naaah!)
-#Y- load previous settings from a JSON file, if it exists
-#Y- if current settings are the same as previous ones, don't do anything
-#Y- save current settings to the JSON file
-#Y- use the LOGGING module, even though I hate it
-#- later (maybe) save the time of last settings fetched from the calendar, if too long since last setting (2 hours?) turn the heat pump off.
+# TODO: save the time of last settings fetched from the calendar, 
+# if too long since last setting (2 hours?) turn the heat pump off.
 
 import os
 import serial
@@ -17,6 +12,10 @@ import logging
 from calendar_events import current_calendar_events
 from irtoy import IrToy
 import conf
+
+__author__ = 'Chris LeBlanc'
+__version__ = '0.1'
+__email__ = 'crleblanc@gmail.com'
 
 def get_saved_settings(inputFile):
     last_temp = None
