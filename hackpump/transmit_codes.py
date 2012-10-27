@@ -47,7 +47,6 @@ def main():
             toy = IrToy(device)
             toy.transmit(codes[codeKey])
             print('code:', codeKey, 'code length:', len(codes[codeKey]), 'handshake:', toy.handshake, 'bytecount:', toy.byteCount, 'complete:', toy.complete)
-            toy.close()
 
     device.close()
 

@@ -54,7 +54,6 @@ def recordCodes(deviceName):
             print('press the remote control button once for the %s button:' % label)
             codes[label] = toy.receive()
 
-    toy.close()
     serialDevice.close()
 
     return codes
