@@ -53,28 +53,32 @@ def main():
     if conf.logfile:
         logging.basicConfig(filename=conf.logfile, level=conf.logging_level)
     
-    events = current_calendar_events(conf.calendar_id, time_window=1)
-    logging.info('getting calendar events from Calendar ID %s' % conf.calendar_id)
-    logging.debug('calendar events: %s' % events)
-    
-    temp_now = None
-    if events:
-        temp_now = events[-1]['summary']
-    else:
-        temp_now = conf.off_setting
+    try:
+        events = current_calendar_events(conf.calendar_id, time_window=1)
+        logging.info('getting calendar events from Calendar ID %s' % conf.calendar_id)
+        logging.debug('calendar events: %s' % events)
+        
+        temp_now = None
+        if events:
+            temp_now = events[-1]['summary']
+        else:
+            temp_now = conf.off_setting
 
-    logging.info('summary info from calendar event: %s' % temp_now)
-    
-    if temp_now != last_temp:
-        logging.info('sending named IR code: %s' % temp_now)
-        set_temp(conf.serial_device, conf.ir_code_file, temp_now)
-        logging.info('saving code: %s to settings file: %s' % (temp_now, conf.saved_settings) )
-        save_settings(conf.saved_settings, temp_now)
-    else:
-        logging.info('current event summary identical to last event, not sending IR command')
+        logging.info('summary info from calendar event: %s' % temp_now)
+        
+        if temp_now != last_temp:
+            logging.info('sending named IR code: %s' % temp_now)
+            set_temp(conf.serial_device, conf.ir_code_file, temp_now)
+            logging.info('saving code: %s to settings file: %s' % (temp_now, conf.saved_settings) )
+            save_settings(conf.saved_settings, temp_now)
+        else:
+            logging.info('current event summary identical to last event, not sending IR command')
+    except Exception, err:
+        logging.error(err)
 
-    if conf.logfile:
-        logging.shutdown()
+    finally:
+        if conf.logfile:
+            logging.shutdown()
 
 if __name__ == '__main__':
     main()
