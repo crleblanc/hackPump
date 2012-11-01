@@ -9,6 +9,7 @@ import os
 import serial
 import json
 import logging
+import traceback
 from calendar_events import current_calendar_events
 from irtoy import IrToy
 import conf
@@ -51,7 +52,7 @@ def main():
     last_temp = get_saved_settings(conf.saved_settings)
     
     if conf.logfile:
-        logging.basicConfig(filename=conf.logfile, level=conf.logging_level)
+        logging.basicConfig(filename=conf.logfile, level=conf.logging_level, format='%(asctime)s %(message)s')
     
     try:
         events = current_calendar_events(conf.calendar_id, time_window=1)
@@ -73,8 +74,8 @@ def main():
             save_settings(conf.saved_settings, temp_now)
         else:
             logging.info('current event summary identical to last event, not sending IR command')
-    except Exception, err:
-        logging.error(err)
+    except Exception:
+        logging.error(traceback.format_exc())
 
     finally:
         if conf.logfile:
