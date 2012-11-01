@@ -44,6 +44,8 @@ def set_temp(deviceName, jsonFile, temp):
         irCode = codes.get(temp)
         if irCode:
             toy.transmit(codes[temp])
+            
+            logging.debug('response from IR Toy: handshake: %d bytecount: %d complete: %s' % (toy.handshake, toy.byteCount, toy.complete))
 
     serialDevice.close()
 
@@ -74,7 +76,7 @@ def main():
             save_settings(conf.saved_settings, temp_now)
         else:
             logging.info('current event summary identical to last event, not sending IR command')
-    except Exception:
+    except:
         logging.error(traceback.format_exc())
 
     finally:
