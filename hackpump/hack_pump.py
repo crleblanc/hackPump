@@ -10,6 +10,7 @@ import serial
 import json
 import logging
 import traceback
+import time
 from calendar_events import current_calendar_events
 from irtoy import IrToy
 import conf
@@ -35,22 +36,21 @@ def save_settings(outputFile, settings):
             json.dump(settings, prevSettingsObj)
 
 def set_temp(deviceName, jsonFile, temp):
-    serialDevice = serial.Serial(deviceName)
-    toy = IrToy(serialDevice)
     
     with open(jsonFile, 'r') as inFile:
         codes = json.load(inFile)
-
-        irCode = codes.get(temp)
+        irCode = codes[temp]
         if irCode:
-            toy.transmit(codes[temp])
+            with serial.Serial(deviceName) as serialDevice:
+                toy = IrToy(serialDevice)
+                toy.transmit(codes[temp])
             
-            logging.debug('response from IR Toy: handshake: %d bytecount: %d complete: %s' % (toy.handshake, toy.byteCount, toy.complete))
-
-    serialDevice.close()
+                logging.debug('response from IR Toy: handshake: %d bytecount: %d complete: %s' % (toy.handshake, toy.byteCount, toy.complete))
+                # one of these seems to be curing the problem of losing the device, see which one (and add to transmit method):
+                toy.reset()
+                time.sleep(0.5)
 
 def main():
-    
     last_temp = get_saved_settings(conf.saved_settings)
     
     if conf.logfile:
@@ -78,6 +78,7 @@ def main():
             logging.info('current event summary identical to last event, not sending IR command')
     except:
         logging.error(traceback.format_exc())
+        raise
 
     finally:
         if conf.logfile:
