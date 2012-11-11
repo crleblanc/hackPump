@@ -44,11 +44,8 @@ def set_temp(deviceName, jsonFile, temp):
             with serial.Serial(deviceName) as serialDevice:
                 toy = IrToy(serialDevice)
                 toy.transmit(codes[temp])
-            
+
                 logging.debug('response from IR Toy: handshake: %d bytecount: %d complete: %s' % (toy.handshake, toy.byteCount, toy.complete))
-                # one of these seems to be curing the problem of losing the device, see which one (and add to transmit method):
-                toy.reset()
-                time.sleep(0.5)
 
 def main():
     last_temp = get_saved_settings(conf.saved_settings)
